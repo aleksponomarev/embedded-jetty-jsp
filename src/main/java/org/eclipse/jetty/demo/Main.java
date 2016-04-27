@@ -156,6 +156,7 @@ public class Main
         context.setAttribute("javax.servlet.context.tempdir", scratchDir);
         context.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
           ".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/.*taglibs.*\\.jar$");
+        System.out.println(baseUri.toASCIIString());
         context.setResourceBase(baseUri.toASCIIString());
         context.setAttribute("org.eclipse.jetty.containerInitializers", jspInitializers());
         context.setAttribute(InstanceManager.class.getName(), new SimpleInstanceManager());
