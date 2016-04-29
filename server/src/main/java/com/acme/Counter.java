@@ -18,6 +18,8 @@
 
 package com.acme;
 
+import monocle.macros.GenLens;
+
 @SuppressWarnings("serial")
 public class Counter implements java.io.Serializable
 {

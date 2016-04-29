@@ -1,10 +1,15 @@
-lazy val jettyVersion = "9.3.7.v20160115"
+import dependencies._
 
-libraryDependencies ++= Seq(
-  "javax.servlet" % "javax.servlet-api" % "3.1.0",
-  "junit" % "junit" % "4.12",
-  "org.eclipse.jetty" % "jetty-annotations" % jettyVersion,
-  "org.eclipse.jetty" % "jetty-webapp" % jettyVersion,
-  "org.eclipse.jetty" % "apache-jsp" % jettyVersion,
-  "org.eclipse.jetty" % "apache-jstl" % jettyVersion
+lazy val runner = project.in(file("runner"))
+  .settings(commonSettings: _*)
+  .settings(libraryDependencies ++= runnerDependencies)
+  .settings(mainClass in assembly := Some("org.eclipse.jetty.demo.Main"))
+  .dependsOn(server)
+
+lazy val server = project.in(file("server"))
+  .settings(commonSettings: _*)
+  .settings(libraryDependencies ++= serverDependencies)
+
+lazy val commonSettings = Seq(
+  scalaVersion := "2.10.1"
 )
