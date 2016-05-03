@@ -26,3 +26,7 @@ lazy val commonSettings = Seq(
 lazy val assemblySwingWs = taskKey[File]("build only swingws project")
 
 assemblySwingWs := (assembly in swingws).value
+
+lazy val copyStatic = taskKey[Unit]("copy static web resources")
+
+copyStatic := IO.copyDirectory((baseDirectory in server).value / "src" / "main" / "resources" / "webroot", baseDirectory.value / "webapp1")
