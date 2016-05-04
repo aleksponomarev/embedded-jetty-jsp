@@ -16,6 +16,13 @@ object dependencies {
   lazy val monocleMacro = "com.github.julien-truffaut" % "monocle-macro_2.11" % "1.2.1"
   lazy val junit = "junit" % "junit" % "4.12"
 
+  val commonsCodec         = "commons-codec" % "commons-codec" % "1.8"
+  val commonsDbcp          = "commons-dbcp" % "commons-dbcp" % "1.4"
+  val slf4jApi             = "org.slf4j" % "slf4j-api" % "1.7.12"
+  val slf4jJcl             = "org.slf4j" % "slf4j-jcl" % "1.7.12"
+  val apacheCommonIo       = "org.apache.commons" % "commons-io" % "1.3.2"
+
+
   lazy val serverDependencies = Seq(
     jettyPlus,
     jettyJsp,
@@ -24,7 +31,12 @@ object dependencies {
     jettyWebapp,
     javaxServlet,
     monocleCore,
-    monocleMacro
+    monocleMacro,
+    commonsCodec,
+    commonsDbcp,
+    slf4jApi,
+    slf4jJcl,
+    apacheCommonIo
   )
 
   lazy val runnerDependencies = Seq(
@@ -34,6 +46,11 @@ object dependencies {
     jettyWebapp,
     javaxServlet,
     jettyAnnotations,
-    junit
+    junit,
+    commonsCodec,
+    commonsDbcp,
+    slf4jApi,
+    slf4jJcl,
+    apacheCommonIo
   )
 }

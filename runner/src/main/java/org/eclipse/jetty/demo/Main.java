@@ -27,8 +27,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.jetty.jsp.JettyJspServlet;
 import org.apache.tomcat.InstanceManager;
@@ -41,9 +39,13 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.util.log.JavaUtilLog;
-import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.webapp.WebAppContext;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.eclipse.jetty.util.RolloverFileOutputStream;
+import java.io.PrintStream;
+import org.apache.commons.io.output.TeeOutputStream;
 
 import com.acme.DateServlet;
 
@@ -59,15 +61,31 @@ public class Main
     public static void main(String[] args) throws Exception
     {
         int port = 8080;
-        LoggingUtil.config();
-        Log.setLog(new JavaUtilLog());
 
         Main main = new Main(port);
+
+        defLogging();
+        
         main.start();
         main.waitForInterrupt();
     }
 
-    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+    private static void defLogging() throws java.io.IOException {
+
+        org.eclipse.jetty.util.log.Log.setLog(new org.eclipse.jetty.util.log.StdErrLog());
+
+        RolloverFileOutputStream rfos =
+            new RolloverFileOutputStream(System.getProperty("user.dir") + "\\log\\jetty_yyyy_mm_dd.log", true);
+
+        TeeOutputStream myOut=new TeeOutputStream(System.out, rfos);
+        
+        PrintStream ps = new PrintStream(myOut);
+    
+        System.setOut(ps);
+        System.setErr(ps);
+    }
+
+	private final Log LOG = LogFactory.getLog(getClass());
 
     private int port;
     private Server server;
@@ -101,11 +119,6 @@ public class Main
         // Start Server
         server.start();
 
-        // Show server state
-        if (LOG.isLoggable(Level.FINE))
-        {
-            LOG.fine(server.dump());
-        }
         this.serverURI = getServerUri(connector);
     }
 

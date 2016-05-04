@@ -20,15 +20,22 @@ package com.acme;
 
 import monocle.macros.GenLens;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 @SuppressWarnings("serial")
 public class Counter implements java.io.Serializable
 {
+
+    private final Log LOG = LogFactory.getLog(getClass());
+    
     int counter=0;
     String last;
 
     public int getCount()
     {
 	counter++;
+    LOG.info("counter increase to - " + counter);
 	return counter;
     }
 
