@@ -1,6 +1,8 @@
 Example: Embedded Jetty w/ JSP Support 
 ======================================
 
+build runnable jar with sbt assembly
+
 This is a maven project, to build it:
 
     $ mvn clean package
